@@ -120,9 +120,11 @@
 Artificial intelligence technologies were used during development.
 
 More on OLAP: An example of implementing a cube in SQL
-<details>
- <summary>Click to expand an example of a sequence of SQL queries</summary>
 
+<details>
+<summary>Click to expand an example of a sequence of SQL queries</summary>
+
+```SQL
  -- 1. Receipts of finished products: all packers in one table
 
 CREATE TEMP TABLE GP_ALL AS
