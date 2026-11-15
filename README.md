@@ -293,7 +293,7 @@ More on OLAP: An example of implementing a cube in SQL
  -- 1. Receipts of finished products: all packers in one table
 
 CREATE TEMP TABLE GP_ALL AS
-SELECT 'З' AS Packer, 10 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantity FROM "GP Receipts Z November 2026" GROUP BY Product, Batch
+SELECT 'Z' AS Packer, 10 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantity FROM "GP Receipts Z November 2026" GROUP BY Product, Batch
 UNION ALL
 SELECT 'A' AS Packer, 30 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantity FROM "GP A Receipts November 2026" GROUP BY Product, Batch
 UNION ALL
@@ -307,14 +307,14 @@ SELECT 'D' AS Packer, 30 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantit
 UNION ALL
 SELECT 'E' AS Packer, 30 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantity FROM "GP Receipts E November 2026" GROUP BY Product, Batch
 UNION ALL
-SELECT 'Ж' AS Packer, 30 AS Plant, Drug, Batch, SUM(Amount) AS TotalAmount FROM "GP Receipts Zh November 2026" GROUP BY Drug, Batch;
+SELECT 'Zh' AS Packer, 30 AS Plant, Drug, Batch, SUM(Amount) AS TotalAmount FROM "GP Receipts Zh November 2026" GROUP BY Drug, Batch;
 
 -- 2. Plans for all packers in one table, deducting the supplied GP
 
 CREATE TEMP TABLE PLAN_ALL AS
-SELECT 'З' AS Packer, 10 AS Plant, s.Product, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.Amount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.Amount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
-FROM "Plan З November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'З' AND fold(s.Drug) = fold(g.Drug) AND s.Month = g.Party
+SELECT 'Z' AS Packer, 10 AS Plant, s.Product, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.Amount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.Amount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
+FROM "Plan Z November 2026" s
+LEFT JOIN GP_ALL g ON g.Packer = 'Z' AND fold(s.Drug) = fold(g.Drug) AND s.Month = g.Party
 UNION ALL
 SELECT 'A' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
 FROM "Plan A November 2026" s
@@ -322,15 +322,15 @@ LEFT JOIN GP_ALL g ON g.Packer = 'A' AND fold(s.Drug) = fold(g.Drug) AND s.Batch
 UNION ALL
 SELECT 'B' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
 FROM "Plan B November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'Б' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
+LEFT JOIN GP_ALL g ON g.Packer = 'B' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
 UNION ALL
-SELECT 'В' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
-FROM "Plan In November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'В' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
+SELECT 'V' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
+FROM "Plan V November 2026" s
+LEFT JOIN GP_ALL g ON g.Packer = 'V' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
 UNION ALL
-SELECT 'Г' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
-FROM "Plan Г November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'Г' AND fold(s.Product) = fold(g.Product) AND s.Batch = g.Party
+SELECT 'G' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
+FROM "Plan G November 2026" s
+LEFT JOIN GP_ALL g ON g.Packer = 'G' AND fold(s.Product) = fold(g.Product) AND s.Batch = g.Party
 UNION ALL
 SELECT 'D' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.RawMaterial, s.Note
 FROM "Plan D November 2026" s
@@ -340,9 +340,9 @@ SELECT 'E' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month,
 FROM "Plan E November 2026" s
 LEFT JOIN GP_ALL g ON g.Packer = 'E' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
 UNION ALL
-SELECT 'Ж' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
-FROM "Plan Ж November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'Ж' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Batch;
+SELECT 'Zh' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
+FROM "Plan Zh November 2026" s
+LEFT JOIN GP_ALL g ON g.Packer = 'Zh' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Batch;
 
 -- 3. Fact: plan × norms. Rows without a found norm are NOT lost (norm 0, note)
 
@@ -422,7 +422,7 @@ FROM FACT GROUP BY Report, Component;
 -- 1. Receipts of finished products: all packers in one table
 
 CREATE TEMP TABLE GP_ALL AS
-SELECT 'З' AS Packer, 10 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantity FROM "GP Receipts Z November 2026" GROUP BY Product, Batch
+SELECT 'Z' AS Packer, 10 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantity FROM "GP Receipts Z November 2026" GROUP BY Product, Batch
 UNION ALL
 SELECT 'A' AS Packer, 30 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantity FROM "GP A Receipts November 2026" GROUP BY Product, Batch
 UNION ALL
@@ -436,14 +436,14 @@ SELECT 'D' AS Packer, 30 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantit
 UNION ALL
 SELECT 'E' AS Packer, 30 AS Plant, Product, Batch, SUM(Quantity) AS TotalQuantity FROM "GP Receipts E November 2026" GROUP BY Product, Batch
 UNION ALL
-SELECT 'Ж' AS Packer, 30 AS Plant, Drug, Batch, SUM(Amount) AS TotalAmount FROM "GP Receipts Zh November 2026" GROUP BY Drug, Batch;
+SELECT 'Zh' AS Packer, 30 AS Plant, Drug, Batch, SUM(Amount) AS TotalAmount FROM "GP Receipts Zh November 2026" GROUP BY Drug, Batch;
 
 -- 2. Plans for all packers in one table, deducting the supplied GP
 
 CREATE TEMP TABLE PLAN_ALL AS
-SELECT 'З' AS Packer, 10 AS Plant, s.Product, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.Amount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.Amount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
-FROM "Plan З November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'З' AND fold(s.Drug) = fold(g.Drug) AND s.Month = g.Party
+SELECT 'Z' AS Packer, 10 AS Plant, s.Product, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.Amount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.Amount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
+FROM "Plan Z November 2026" s
+LEFT JOIN GP_ALL g ON g.Packer = 'Z' AND fold(s.Drug) = fold(g.Drug) AND s.Month = g.Party
 UNION ALL
 SELECT 'A' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
 FROM "Plan A November 2026" s
@@ -451,15 +451,15 @@ LEFT JOIN GP_ALL g ON g.Packer = 'A' AND fold(s.Drug) = fold(g.Drug) AND s.Batch
 UNION ALL
 SELECT 'B' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
 FROM "Plan B November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'Б' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
+LEFT JOIN GP_ALL g ON g.Packer = 'B' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
 UNION ALL
-SELECT 'В' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
-FROM "Plan In November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'В' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
+SELECT 'V' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
+FROM "Plan V November 2026" s
+LEFT JOIN GP_ALL g ON g.Packer = 'V' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
 UNION ALL
-SELECT 'Г' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
-FROM "Plan Г November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'Г' AND fold(s.Product) = fold(g.Product) AND s.Batch = g.Party
+SELECT 'G' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
+FROM "Plan G November 2026" s
+LEFT JOIN GP_ALL g ON g.Packer = 'G' AND fold(s.Product) = fold(g.Product) AND s.Batch = g.Party
 UNION ALL
 SELECT 'D' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.RawMaterial, s.Note
 FROM "Plan D November 2026" s
@@ -469,9 +469,9 @@ SELECT 'E' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month,
 FROM "Plan E November 2026" s
 LEFT JOIN GP_ALL g ON g.Packer = 'E' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Party
 UNION ALL
-SELECT 'Ж' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
-FROM "Plan Ж November 2026" s
-LEFT JOIN GP_ALL g ON g.Packer = 'Ж' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Batch;
+SELECT 'Zh' AS Packer, 30 AS Plant, s.Drug, s.Quantity AS Plan, s.Batch, s.Month, COALESCE(g.SumAmount, 0) AS Delivered, COALESCE(s.Quantity, 0) - COALESCE(g.SumAmount, 0) AS Remaining, s.VM, s.Raw Material, s.Note
+FROM "Plan Zh November 2026" s
+LEFT JOIN GP_ALL g ON g.Packer = 'Zh' AND fold(s.Drug) = fold(g.Drug) AND s.Batch = g.Batch;
 
 -- 3. Fact: plan × norms. Rows without a found norm are NOT lost (norm 0, note)
 
@@ -491,14 +491,14 @@ LEFT JOIN (SELECT DISTINCT Factory, "Material Name", Short Text of Object, "Stan
 -- 4. Warehouse snapshots: one value per component (without line‑by‑line replication)
 
 CREATE TEMP TABLE UNISK AS
-SELECT 'H' AS Packer, "Name of material", TotaLsaldo FROM "Warehouse 10 dated 11/01/2026"
+SELECT 'Z' AS Packer, "Name of material", TotaLsaldo FROM "Warehouse 10 dated 11/01/2026"
 UNION ALL SELECT 'A' AS Packer, "Name of material", TotaLsaldo FROM "Warehouse A 11/01/2026"
 UNION ALL SELECT 'B' AS Packer, "Name of material", TotaLsaldo FROM "Warehouse B 11/01/2026"
-UNION ALL SELECT 'B' AS Packer, "Name of material", TotaLsaldo FROM "Warehouse ON 11/01/2026"
-UNION ALL SELECT 'D' AS Packer, "Name of material", TotaLsaldo FROM "Warehouse ON 11/01/2026"
+UNION ALL SELECT 'V' AS Packer, "Name of material", TotaLsaldo FROM "Warehouse V 11/01/2026"
+UNION ALL SELECT 'G' AS Packer, "Name of material", TotaLsaldo FROM "Warehouse G 11/01/2026"
 UNION ALL SELECT 'D' AS Packer, "Name of material", TotaLsaldo FROM "Warehouse D 11/01/2026"
 UNION ALL SELECT 'E' AS Packer, "Material name", Total amount FROM "Warehouse E 11/01/2026"
-UNION ALL SELECT 'W' AS Packer, "Material name", Total amount FROM "Warehouse W 11/01/2026";
+UNION ALL SELECT 'Zh' AS Packer, "Material name", Total amount FROM "Warehouse Zh 11/01/2026";
 
 CREATE TEMP TABLE SK_FAS AS
 SELECT Packer, "Material Name", SUM(TotalBalance) AS Balance
@@ -507,6 +507,8 @@ FROM UNISK GROUP BY Packer, "Material Name";
 CREATE TEMP TABLE SK_CS AS
 SELECT "Material Name", SUM(TotalBalance) AS Balance
 FROM "CS Warehouse 01.11.2026" GROUP BY "Material Name";
+
+-- Warehouse 113 is for semi-finished products, but it is not used any further here
 
 CREATE TEMP TABLE SK_PF AS
 SELECT "Material Name", SUM(TotalBalance) AS Balance
@@ -549,6 +551,8 @@ FROM FACT GROUP BY Report, Component;
 
 -- 9. Final table for OLAP. Grain: Report × Packer × Component × Drug × Month × Batch
 
+-- CS here stands for central warehouse
+
 CREATE TEMP TABLE OLAP_DEFICIT AS
 SELECT f.Report, f.Packer, f.Factory, f.Component, f.Drug,
        f.Month AS “Production Period”, f. Batch
@@ -565,9 +569,9 @@ SELECT f.Report, f.Packer, f.Factory, f.Component, f.Drug,
             THEN dk.“Packer’s Remainder” / dk.Rows ELSE 0 END AS “Deficit (distribution)”,
        CASE WHEN ck.CS IS NOT NULL AND ak.Need_Total > 0 AND f.Need > 0
             THEN ck.CS * f.Need / ak.Need_Total
-            ELSE COALESCE(ck.ЦС, 0) / ak.Строк_Общ END AS "ЦС (распр.)",
-       CASE WHEN ck."Итого ЦС" IS NOT NULL AND ak.Нужно_Общ > 0 AND f.Нужно > 0
-            THEN ck."Итого ЦС" * f.Нужно / ak.Нужно_Общ
+            ELSE COALESCE(ck.CS, 0) / ak.Строк_Общ END AS "CS (distrib.)",
+       CASE WHEN ck."Total CS" IS NOT NULL AND ak.Need_Total > 0 AND f.Need > 0
+            THEN ck."Total CS" * f.Need / ak.Need_Total
             ELSE COALESCE(ck."Total CS", 0) / ak.Rows_Total END AS "Total CS (distrib.)"
 FROM FACT f
 LEFT JOIN DEF_KF dk ON f.Report = dk.Report AND f.Packer = dk.Packer AND fold(f.Component) = fold(dk.Component)
