@@ -225,7 +225,7 @@ SELECT * FROM OLAP_ДЕФИЦИТ;
 
 </details>
 
-В папке проекта также есть сборка Сингулярность Классик (SingularityClassic.html) - это версия для старого оборудования, работы в старых браузерах. Проверена в Palemoon, а также в Safari на iPad 4. Целевая поддержка от версии windows 98 (IE 6). Программа полностью оффлайн, даже если раз открыта с хостинга, потом работает с выключенным интернетом.
+В папке проекта также есть сборка Сингулярность Классик (SingularityClassic.html) - это версия для старого оборудования, работы в старых браузерах. Проверена в Palemoon, а также в Safari на iPad 4. Целевая поддержка от версии windows 98 (IE 6). Программа полностью оффлайн, даже если раз открыта с хостинга, потом работает с выключенным интернетом, какое-то время. Поддерживаются методы хранения localstorage (современные браузеры) и userdata (старые браузеры). Сохранение и загрузка работают как по современным json-алгоритмам, так и по-старому, посимвольно (это дольше, но работает в старых браузерах).
 
 ---
 ---
@@ -454,4 +454,4 @@ SELECT * FROM OLAP_DEFICIT;
 ```
 </details>
 
-The project folder also contains a build called Singularity Classic (SingularityClassic.html) — a version designed for older hardware and legacy browsers. It has been tested in Pale Moon, as well as in Safari on an iPad 4. It is intended to support systems as far back as Windows 98 (running IE 6). The program is completely offline; it continues to work even after being opened from a hosting service and subsequently disconnecting from the internet.
+SingularityClassic (SingularityClassic.html) is a version designed for older hardware and legacy browsers. It has been tested in Pale Moon, as well as in Safari on an iPad 4. It supports environments as far back as Windows 98 (running IE 6). The program is entirely offline; once opened from a host, it can continue to function for some time even without an internet connection. It utilizes both `localStorage` (for modern browsers) and `userData` (for older browsers) for data storage. Saving and loading are supported via both modern JSON-based methods and a legacy, character-by-character approach—the latter is slower, but ensures compatibility with older browsers.
